@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ block.super }} {{ title }}
+{% endblock title %}
+
+{% block main %}
+
+<form method="post" class="container" style="padding: 40px 400px">
+    {% csrf_token %}
+    <div style="padding: 20px">
+        <p>Имя пользователя(Username)</p>
+        {{ form.username }}
+        <p>Email</p>
+        {{ form.email }}
+        <p>Пароль</p>
+        {{ form.password1 }}
+        <p>Пароль повторно</p>
+        {{ form.password2 }}
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="margin-left: 190px ">Регистрация</button>
+</form>
+{% endblock main %}

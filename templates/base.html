@@ -1,0 +1,113 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+
+
+    {% include 'components/_styles.html' %}
+
+    {% block style %}
+    {% endblock style %}
+
+
+    <title>
+        {% block title %}
+
+        {% endblock title %}
+    </title>
+</head>
+<body>
+
+<div class="container">
+
+    {% include 'components/_navbar.html' %}
+
+    <main>
+
+        {% if messages %}
+        <ul class="messages" style="list-style: none; margin: 20px 110px 0 80px;">
+            {% for message in messages %}
+            <li class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}">
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% block main %}
+
+        {% endblock main %}
+    </main>
+
+    <footer class="bg-body-tertiary text-center ">
+        <!-- Grid container -->
+        <div class="container p-4 pb-0 mt-5">
+            <!-- Section: Social media -->
+            Для сотрудничества:
+            <section class="mb-4 mt-5">
+                <!-- Facebook -->
+                <a
+                        data-mdb-ripple-init
+                        class="btn text-white btn-floating m-1"
+                        style="background-color: #3b5998;"
+                        href="#!"
+                        role="button"
+                ><i class="fab fa-facebook-f"></i
+                ></a>
+
+                <!-- Twitter -->
+                <a
+                        data-mdb-ripple-init
+                        class="btn text-white btn-floating m-1"
+                        style="background-color: #55acee;"
+                        href="#!"
+                        role="button"
+                ><i class="fab fa-twitter"></i
+                ></a>
+
+                <!-- Google -->
+                <a
+                        data-mdb-ripple-init
+                        class="btn text-white btn-floating m-1"
+                        style="background-color: #dd4b39;"
+                        href="#!"
+                        role="button"
+                ><i class="fab fa-google"></i
+                ></a>
+
+                <!-- Instagram -->
+                <a
+                        data-mdb-ripple-init
+                        class="btn text-white btn-floating m-1"
+                        style="background-color: #ac2bac;"
+                        href="#!"
+                        role="button"
+                ><i class="fab fa-instagram"></i
+                ></a>
+            </section>
+            <!-- Section: Social media -->
+        </div>
+        <!-- Grid container -->
+
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+            © Телеканал «Еда», 2012—2024<br>
+            <a class="text-body" href="https://www.tveda.ru/privacy/" style="color: blue !important;" target="_blank">Пользовательское
+                соглашение<br></a>
+            <a class="text-body" href="https://www.tveda.ru/personal_protection/" style="color: blue !important;"
+               target="_blank">Защита персональных данных<br></a>
+            <a class="text-body" href="https://www.tveda.ru/privacypd/" style="color: blue !important;" target="_blank">Политика
+                обработки ПД<br></a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+
+</div>
+
+{% include 'components/_scripts.html' %}
+
+</body>
+</html>

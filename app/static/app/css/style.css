@@ -1,0 +1,10 @@
+p {
+    font-family: cursive !important;
+}
+body {
+    background-color: blanchedalmond;
+}
+
+div p {
+    background-color: #eeeeee;
+}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load app_extras %}
+
+{% block title %}
+{{ block.super }}{{ title }}
+{% endblock title %}
+
+{% block main %}
+
+
+<div class="d-flex justify-content-around mt-5 mb-3" style="border: 1px solid green; border-radius: 8px">
+  {% all_categories as categories %}
+  {% for category in categories %}
+  <div>
+    <a href="{% url 'by_category' category.pk %}">{{ category.title }}</a>
+  </div>
+  {% endfor %}
+</div>
+
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for recipe in recipes %}
+      <div class="col">
+        <div class="card h-100">
+          {% if recipe.photo %}
+          <img src="{{ recipe.photo.url }}" class="card-img-top" alt="Skyscrapers"/>
+          {% else %}
+          <img src="https://miro.medium.com/v2/resize:fit:1200/1*2z1QXCJntlNnqPRYylbpmg.jpeg" class="card-img-top" alt="Skyscrapers"/>
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ recipe.name }}</h5>
+            <p class="card-text">
+              {{ recipe.content| truncatewords:15  }}
+            </p>
+          </div>
+          <div  class="d-grid gap-2 d-md-flex justify-content-md-end m-2">
+            <a href="{% url 'recipe_detail' recipe.pk %}"><button class="btn btn-primary me-md-2" type="button" data-mdb-ripple-init>Подробнее</button></a>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted">{{ recipe.created }}</small>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+
+</div>
+{% endblock main %}

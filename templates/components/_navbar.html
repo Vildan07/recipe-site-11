@@ -1,0 +1,94 @@
+{% load static %}
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
+  <!-- Container wrapper -->
+  <div class="container-fluid">
+    <!-- Toggle button -->
+    <button
+      data-mdb-collapse-init
+      class="navbar-toggler"
+      type="button"
+      data-mdb-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Collapsible wrapper -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <!-- Left links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li>
+          <a href="{% url 'index' %}"><img src="{% static 'app/img/img.png' %}" width="100px"></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'index' %}">Главное меню</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">О сайте</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Для сотрудничества</a>
+        </li>
+      </ul>
+      <!-- Left links -->
+    </div>
+    <!-- Collapsible wrapper -->
+
+    <!-- Right elements -->
+    <div class="d-flex align-items-center">
+        {% if request.user.is_authenticated %}
+        <div class="dropdown">
+        <a
+          data-mdb-dropdown-init
+          class="dropdown-toggle d-flex align-items-center hidden-arrow"
+          href="#"
+          id="navbarDropdownMenuAvatar"
+          role="button"
+          aria-expanded="false"
+        >
+          <img
+            src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+            class="rounded-circle"
+            height="25"
+            alt="Black and White Portrait of a Man"
+            loading="lazy"
+          />
+        </a>
+          <ul
+                  class="dropdown-menu dropdown-menu-end"
+                  aria-labelledby="navbarDropdownMenuAvatar"
+          >
+            <li>
+              <a class="dropdown-item" href="{% url 'profile' user.username %}">Мой профиль</a>
+            </li>
+            {% if perms.user.app.add_recipe %}
+              <li>
+                <a class="dropdown-item" href="{% url 'recipe_create' %}">Добавить рецепт</a>
+              </li>
+            {% endif %}
+            <li>
+              <a href="{% url 'logout' %}" class="dropdown-item">Выйти</a>
+            </li>
+          </ul>
+      </div>
+        {% else %}
+        <a href="{% url 'login' %}" data-mdb-ripple-init type="button" class="btn btn-link px-3 me-2">
+          Вход
+        </a>
+        <a href="{% url 'register' %}" data-mdb-ripple-init type="button" class="btn btn-primary me-3">
+          Регистрация
+        </a>
+      {% endif%}
+      </div>
+      <!-- Avatar -->
+
+    </div>
+    <!-- Right elements -->
+  </div>
+  <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->

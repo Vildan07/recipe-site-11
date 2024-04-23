@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+{% endblock style %}
+
+{% block title %}
+{{ block.super }} Добавить рецепт
+{% endblock title %}
+
+{% block main %}
+<div class="d-flex justify-content-center">
+    <form method="post" enctype="multipart/form-data" style="width: 600px; padding: 10px 10px 10px 10px;">
+        {% csrf_token %}
+
+        {{ form.name }}
+        {{ form.category }}
+        {{ form.content }}
+        {{ form.photo }}
+        {{ form.published }}
+
+        <button type="submit" class="btn btn-primary" style="margin: 50px 0 50px 200px">Добавить</button>
+    </form>
+</div>
+{% endblock main %}

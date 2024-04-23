@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+{% endblock style %}
+
+
+{% block title %}
+{{ recipe.name }}
+{% endblock title %}
+
+{% block main %}
+        {% if messages %}
+        <ul class="messages" style="list-style: none; margin: 20px 110px 0 80px;">
+            {% for message in messages %}
+            <li class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}">
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+<div class="card text-center border border-primary shadow-0">
+  <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+    <a href="#!">
+      <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+    </a>
+  </div>
+  <div class="card-header d-flex justify-content-between">
+    <div>{{ recipe.category.title }}</div>
+
+    <div class="d-flex justify-content-between">
+      {% if recipe.photo %}
+      <img src="{{ recipe.photo.url }}" width="100%">
+      {% else %}
+      <h3 style="margin-right: 380px">No image to display</h3>
+      {% endif %}
+
+       <div style="margin-right: 10px">
+        Автор: {% if request.user == recipe.author %} <a href="{% url 'profile' recipe.author.username %}">{{ recipe.author }}</a>
+         {% else %}
+         {{ recipe.author }}
+         {% endif %}
+      </div>
+      <div style="margin-right: 10px">
+        {{ recipe.created }}
+      </div>
+      {% if request.user == recipe.author %}
+      <div style="margin-right: 10px">
+        <a href="{% url 'recipe_update' recipe.pk %}"><i class="fas fa-pen-to-square"></i></a>
+      </div>
+      <div>
+        <a href="{% url 'recipe_delete' recipe.pk %}"><i class="fas fa-trash-can"></i></a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ recipe.name }}</h5>
+    <div style="text-align: left">
+      <p class="card-text " >
+        {{ recipe.content | linebreaks }}
+      </p>
+    </div>
+    <a href="{% url 'index' %}" type="button" class="btn btn-primary">Главное меню</a>
+  </div>
+  <div>
+    {% if request.user.is_authenticated %}
+
+      <section style="background-color: beige">
+          <div class="container my-5 py-5 text-dark">
+              <div class="row d-flex justify-content-center">
+                  <div class="col-md-10 col-lg-8 col-xl-6">
+                      <div class="card">
+                          <div class="card-body p-4">
+                              <div class="d-flex flex-start w-100">
+                                  <img class="rounded-circle shadow-1-strong me-3"
+                                       src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(21).webp" alt="avatar"
+                                       width="65"
+                                       height="65"/>
+                                  <div class="w-100">
+                                      <h5>Добавить комментарий:</h5>
+                                      <form method="post" action="{% url 'save_comment' recipe.pk %}">
+                                          {% csrf_token %}
+                                          <div data-mdb-input-init class="form-outline">
+                                              {{ form.text }}
+                                              <label class="form-label" for="textAreaExample">Комментарий</label>
+                                          </div>
+                                          <div class="d-flex justify-content-between mt-3">
+                                              <button style="margin: 15px" type="submit" class="btn btn-success mx-2">
+                                                  Сохранить
+                                              </button>
+                                              </button>
+                                          </div>
+                                      </form>
+                                      {% else %}
+                                      <h6>Зарегистрируйтесь на сайте чтобы оставить комментарий: <a
+                                              href="{% url 'register' %}">Регистрация</a></h6>
+
+                                      {% endif %}
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+
+    <div>
+    {% for comment in comments %}
+    <div class="card mb-3">
+        <section style="background-color: #e7effd;">
+            <div class="container my-5 py-5 text-dark">
+                <div class="row d-flex justify-content-center" >
+                    <div class="col-md-11 col-lg-9 col-xl-7">
+                        <div class="d-flex flex-start mb-4">
+                            <img class="rounded-circle shadow-1-strong me-3"
+                                 src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(32).webp" alt="avatar"
+                                 width="65"
+                                 height="65"/>
+                            <div class="card w-100">
+                                <div class="card-body p-4">
+                                    <div class="">
+                                        <h5>{{ comment.commentator }}</h5>
+                                        <p class="small">{{ comment.created }}</p>
+                                        <p>
+                                           {{ comment.text }}
+                                        </p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <a href="#!" class="link-muted"><i class="fas fa-reply me-1"></i> Reply</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    {% endfor %}
+  </div>
+
+  </div>
+</div>
+
+
+{% endblock main %}
+
